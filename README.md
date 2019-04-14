@@ -6,3 +6,4 @@ To launch the script :
 ```
 python LogsGenerator.py
 ```
+_works fine with python versions 2.7 and 3.6_
