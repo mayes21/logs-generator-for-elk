@@ -4,6 +4,6 @@ Python script to generate logs for ELK (Elasticsearch - Logstash - Kibana) stack
 
 To launch the script :
 ```
-python LogsGenerator.py
+python LogsGenerator.py -p [logs_path]
 ```
 _works fine with python versions 2.7 and 3.6_
