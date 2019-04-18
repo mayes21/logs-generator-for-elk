@@ -17,7 +17,7 @@ docker pull docker.elastic.co/logstash/logstash:7.0.0
 
 > To launch logstash and install `logstash-output-stdout` plugin on docker :
 ```
-docker run --name logstash-run --rm -it -v ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml -v ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash-stdout-output.conf:/usr/share/logstash/pipeline/logstash-stdout-output.conf:ro -v ~/Bureau/logFile.log:/home/logFile.log docker.elastic.co/logstash/logstash:7.0.0 sh -c "logstash-plugin install --no-verify logstash-output-stdout; /usr/local/bin/docker-entrypoint"
+docker run --name logstash-run --rm -it -v ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml -v ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro -v ~/Bureau/logFile.log:/home/logFile.log docker.elastic.co/logstash/logstash:7.0.0 sh -c "logstash-plugin install --no-verify logstash-output-stdout; /usr/local/bin/docker-entrypoint"
 ```
 
 > Logstash output on stdout after applying the _grok filter_** :

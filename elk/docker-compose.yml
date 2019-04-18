@@ -22,7 +22,7 @@ services:
     container_name: logstash
     volumes:
       - ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash-elasticsearch-output.conf:/usr/share/logstash/pipeline/logstash-elasticsearch-output.conf:ro
+      - ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
       - ~/Bureau:/home
     ports:
       - "5000:5000"

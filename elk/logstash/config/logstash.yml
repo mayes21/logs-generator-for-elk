@@ -1,6 +1,2 @@
 http.host: localhost
-# generic path.config
-#path.config: /usr/share/logstash/pipeline
-
-# path.config for elasticsearch output
-path.config: /usr/share/logstash/pipeline/logstash-elasticsearch-output.conf
+path.config: /usr/share/logstash/pipeline
