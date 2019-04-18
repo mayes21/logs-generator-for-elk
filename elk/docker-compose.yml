@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
+    container_name: elasticsearch
+    volumes:
+      - ~/perso/dev/logs-generator-for-elk/elk/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      TZ: Europe/Paris
+    networks:
+      - elk
+
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:$ELK_VERSION
+    container_name: logstash
+    volumes:
+      - ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash-elasticsearch-output.conf:/usr/share/logstash/pipeline/logstash-elasticsearch-output.conf:ro
+      - ~/Bureau:/home
+    ports:
+      - "5000:5000"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      TZ: Europe/Paris
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
+
+
+networks:
+  elk:
+    driver: bridge

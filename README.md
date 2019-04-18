@@ -1,5 +1,7 @@
 ## LOGS GENERATOR 4 ELK
 
+#### DOCKER
+
 Python script to generate logs for ELK (Elasticsearch - Logstash - Kibana) stack testing purpose.
 
 > To launch the script :
@@ -15,7 +17,7 @@ docker pull docker.elastic.co/logstash/logstash:7.0.0
 
 > To launch logstash and install `logstash-output-stdout` plugin on docker :
 ```
-docker run --name logstash --rm -it -v ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml -v ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline:/usr/share/logstash/pipeline -v ~/Bureau/logFile.log:/home/logFile.log docker.elastic.co/logstash/logstash:7.0.0 sh -c "logstash-plugin install --no-verify logstash-output-stdout; /usr/local/bin/docker-entrypoint
+docker run --name logstash-run --rm -it -v ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml -v ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash-stdout-output.conf:/usr/share/logstash/pipeline/logstash-stdout-output.conf:ro -v ~/Bureau/logFile.log:/home/logFile.log docker.elastic.co/logstash/logstash:7.0.0 sh -c "logstash-plugin install --no-verify logstash-output-stdout; /usr/local/bin/docker-entrypoint"
 ```
 
 > Logstash output on stdout after applying the _grok filter_** :
@@ -37,4 +39,11 @@ docker run --name logstash --rm -it -v ~/perso/dev/logs-generator-for-elk/elk/lo
 > **The filter :
 ```
 { "message" => "%{DATESTAMP:datetime} %{LOGLEVEL:loglevel}%{SPACE}:%{SPACE}%{GREEDYDATA:message}" }
+```
+
+#### DOCKER-COMPOSE (ELK STACK)
+
+> To launch elasticsearch and logstash (`-d` as daemon) :
+```
+docker-compose up
 ```
