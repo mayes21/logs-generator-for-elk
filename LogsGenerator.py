@@ -28,8 +28,7 @@ def main():
     parser.add_argument("-p", help="Logs path")
     args = parser.parse_args()
     # logging configuration
-    logging.basicConfig(filename=args.p + "/logFile.log",
-                        level=logging.DEBUG,
+    logging.basicConfig(level=logging.DEBUG,
                         filemode='a',
                         format='%(asctime)s %(levelname)s : %(message)s',
                         datefmt='%d-%m-%Y %H:%M:%S')

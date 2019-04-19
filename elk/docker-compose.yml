@@ -2,6 +2,18 @@ version: '3'
 
 services:
 
+  logsgenerator:
+    container_name: logsgenerator
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+    command: "-p /home/"
+    environment:
+      TZ: Europe/Paris
+    depends_on:
+      - logstash
+      - elasticsearch
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
     container_name: elasticsearch
@@ -23,7 +35,7 @@ services:
     volumes:
       - ~/perso/dev/logs-generator-for-elk/elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ~/perso/dev/logs-generator-for-elk/elk/logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-      - ~/Bureau:/home
+#      - ~/Bureau:/home
     ports:
       - "5000:5000"
       - "9600:9600"
