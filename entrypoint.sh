@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python /home/LogsGenerator.py $@
+python /home/LogsGenerator.py
