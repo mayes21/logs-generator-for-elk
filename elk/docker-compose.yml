@@ -14,21 +14,23 @@ services:
       TZ: Europe/Paris
     depends_on:
       - logstash
-#      - elasticsearch
+      - elasticsearch
+    networks:
+      - elk
 
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
-#    container_name: elasticsearch
-#    volumes:
-#      - ~/perso/dev/logs-generator-for-elk/elk/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-#    environment:
-#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-#      TZ: Europe/Paris
-#    networks:
-#      - elk
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:$ELK_VERSION
+    container_name: elasticsearch
+    volumes:
+      - ~/perso/dev/logs-generator-for-elk/elk/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      TZ: Europe/Paris
+    networks:
+      - elk
 
 
   logstash:
@@ -44,12 +46,24 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
       TZ: Europe/Paris
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      - elk
+    depends_on:
+      - elasticsearch
+    networks:
+      - elk
 
 
-#networks:
-#  elk:
-#    driver: bridge
+  kibana:
+    image: docker.elastic.co/kibana/kibana:$ELK_VERSION
+    container_name: kibana
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    driver: bridge
